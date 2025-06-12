@@ -1,0 +1,47 @@
+const dataInicial = new Date("2021-08-27T00:00:00");
+
+function atualizarContador() {
+  const agora = new Date();
+  
+  let anos = agora.getFullYear() - dataInicial.getFullYear();
+  let meses = agora.getMonth() - dataInicial.getMonth();
+  let dias = agora.getDate() - dataInicial.getDate();
+  let horas = agora.getHours() - dataInicial.getHours();
+  let minutos = agora.getMinutes() - dataInicial.getMinutes();
+  let segundos = agora.getSeconds() - dataInicial.getSeconds();
+
+  // Corrige valores negativos
+  if (segundos < 0) {
+    segundos += 60;
+    minutos--;
+  }
+
+  if (minutos < 0) {
+    minutos += 60;
+    horas--;
+  }
+
+  if (horas < 0) {
+    horas += 24;
+    dias--;
+  }
+
+  if (dias < 0) {
+    const ultimoDiaMesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
+    dias += ultimoDiaMesAnterior;
+    meses--;
+  }
+
+  if (meses < 0) {
+    meses += 12;
+    anos--;
+  }
+
+  // Atualiza o conteúdo na tela
+  document.getElementById("contador").innerHTML = 
+    `${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos, ${segundos} segundos`;
+}
+
+// Executa a cada segundo
+setInterval(atualizarContador, 1000);
+atualizarContador(); // Executa imediatamente
